@@ -5,14 +5,92 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailSystemDesktopApp"
         mc:Ignorable="d"
-        Title="MailSystem" Height="450" Width="800">
+        Title="MailSystem" Height="450" Width="692" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="35*"/>
-            <ColumnDefinition Width="114*"/>
-            <ColumnDefinition Width="651*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label Content="Logged as: " HorizontalAlignment="Left" Margin="32,22,0,0" VerticalAlignment="Top" FontSize="16" Grid.ColumnSpan="2"/>
+        <Label x:Name="LoggedLabel" Content="Logged as: " HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" FontSize="16" Width="276"/>
+        <TabControl x:Name="mailTabControl" Margin="10,38,10,0" TabStripPlacement="Left" SelectionChanged="mailTabControl_SelectionChanged">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem x:Name="CreateMail" Header="Create Mail">
+                <StackPanel x:Name="createMailPanel">
+                    <Grid x:Name="createMailGrid" Grid.Column="1"
+                        Grid.Row="1" Width="560" Height="390">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="560"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="titleLabel" Content="Title:" HorizontalAlignment="Left" Margin="30,27,0,0" VerticalAlignment="Top" FontSize="16"/>
+                        <TextBox x:Name="titleTextBox" HorizontalAlignment="Left" Margin="120,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="395" FontSize="16"/>
+                        <Label x:Name="addresserLabel" Content="Addresser:" HorizontalAlignment="Left" Margin="30,58,0,0" VerticalAlignment="Top" FontSize="16"/>
+                        <Label x:Name="contentLabel" Content="Content:" HorizontalAlignment="Left" Margin="30,89,0,0" VerticalAlignment="Top" FontSize="16"/>
+                        <TextBox x:Name="contentTextBox" HorizontalAlignment="Left" Margin="120,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="395" FontSize="14" Height="216"/>
+                        <Button x:Name="sendMailButton" Content="Send" HorizontalAlignment="Left" Margin="428,327,0,0" VerticalAlignment="Top" FontSize="16" Width="87" Click="sendMailButton_Click"/>
+                        <ComboBox x:Name="addresserComboBox" HorizontalAlignment="Left" Margin="120,64,0,0" VerticalAlignment="Top" Width="395"/>
+                    </Grid>
+                </StackPanel>
+
+            </TabItem>
+            <TabItem x:Name="IncomingMail" Header="Incoming Mail">
+                <StackPanel x:Name="mailPanel">
+
+                    <Grid x:Name="allMailsGrid" Width="200" Height="370" HorizontalAlignment="Left">
+                        <ScrollViewer x:Name="scrollInc" HorizontalAlignment="Left">
+                            <TextBlock x:Name="allMailsTextBox" Width="180" HorizontalAlignment="Left" TextWrapping="Wrap"></TextBlock>
+                        </ScrollViewer>
+                    </Grid>
+                    <Grid x:Name="mailGrid" Grid.Column="1"
+                        Grid.Row="1" Width="360" Height="370" HorizontalAlignment="Right" Margin="0,-370,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="360"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </StackPanel>
+
+            </TabItem>
+
+            <TabItem x:Name="OutgoingMail" Header="Outgoing Mail">
+                <StackPanel x:Name="mailPanelOut">
+                    <Grid x:Name="allMailsGridOut" Width="200" Height="370" HorizontalAlignment="Left">
+                        <ScrollViewer x:Name="scrollOut" HorizontalAlignment="Left">
+                            <TextBlock x:Name="allMailsTextBoxOut" Width="180" HorizontalAlignment="Left" TextWrapping="Wrap"></TextBlock>
+                        </ScrollViewer>
+                    </Grid>
+                    <Grid x:Name="mailGridOut" Grid.Column="1"
+                        Grid.Row="1" Width="360" Height="370" HorizontalAlignment="Right" Margin="0,-370,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="360"/>
+                    </Grid.ColumnDefinitions>
+                    </Grid>
+                </StackPanel>
+
+            </TabItem>
+        </TabControl>
+        <Label x:Name="UserIdLabel" Content="" HorizontalAlignment="Left" Margin="314,2,0,0" VerticalAlignment="Top" FontSize="16" Width="276" Visibility="Visible"/>
 
     </Grid>
 </Window>
